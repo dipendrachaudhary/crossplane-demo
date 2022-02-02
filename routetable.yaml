@@ -1,0 +1,47 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: RouteTable
+metadata:
+  name: crossplane-public-routetable
+spec:
+  forProvider:
+    region: ap-south-1
+    vpcIdRef:
+      name: crossplane-vpc
+    routes:
+      - destinationCidrBlock: 10.0.0.0/16
+        gatewayId: local
+      - destinationCidrBlock: 0.0.0.0/0
+        gatewayIdRef:
+          name: crossplane-internetgateway
+    associations:
+      - subnetIdRef:
+          name: crossplane-public-subnet1
+    tags:
+      - key: Name
+        value: crossplane-public-rt
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: RouteTable
+metadata:
+  name: crossplane-private-routetable
+spec:
+  forProvider:
+    region: ap-south-1
+    vpcIdRef:
+      name: crossplane-vpc
+    associations:
+      - subnetIdRef:
+          name: crossplane-private-subnet1
+    routes:
+      - destinationCidrBlock: 10.0.0.0/16
+        gatewayId: local
+      - destinationCidrBlock: 0.0.0.0/0
+        natGatewayIdRef:
+          name: crossplane-natgateway
+    tags:
+      - key: Name
+        value: crossplane-private-rt
+  providerConfigRef:
+    name: default

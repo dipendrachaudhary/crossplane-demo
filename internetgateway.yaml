@@ -1,0 +1,14 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: InternetGateway
+metadata:
+  name: crossplane-internetgateway
+spec:
+  forProvider:
+    region: ap-south-1
+    vpcIdRef:
+      name: crossplane-vpc
+    tags:
+      - key: Name
+        value: crossplane-internetgateway
+  providerConfigRef:
+    name: default

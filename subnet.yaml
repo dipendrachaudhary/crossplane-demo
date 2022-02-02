@@ -1,0 +1,35 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: crossplane-public-subnet1
+spec:
+  forProvider:
+    region: ap-south-1
+    availabilityZone: ap-south-1b
+    cidrBlock: 10.0.1.0/24
+    vpcIdRef:
+      name: crossplane-vpc
+    mapPublicIPOnLaunch: true
+    tags:
+      - key: Name
+        value: crossplane-public-subnet1
+  providerConfigRef:
+    name: default
+  
+---
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: crossplane-private-subnet1
+spec:
+  forProvider:
+    region: ap-south-1
+    availabilityZone: ap-south-1c
+    cidrBlock: 10.0.2.0/24
+    vpcIdRef:
+      name: crossplane-vpc
+    tags:
+      - key: Name
+        value: crossplane-private-subnet1
+  providerConfigRef:
+    name: default

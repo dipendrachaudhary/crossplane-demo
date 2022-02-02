@@ -1,0 +1,14 @@
+apiVersion: ec2.aws.crossplane.io/v1alpha1
+kind: ElasticIP
+metadata:
+  name: crossplane-eip
+spec:
+  forProvider:
+    region: ap-south-1
+    domain: "vpc"
+    tags:
+      - key: Name
+        value: crossplane-eip
+  providerConfigRef:
+    name: default
+    
